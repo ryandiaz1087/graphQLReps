@@ -5,70 +5,72 @@ const prisma = new Prisma({
   endpoint: 'http://localhost:4466',
 });
 
-prisma.exists.Comment({
-  id: "abvasd",
-}).then((exists) => {
-  console.log(exists);
-})
+export { prisma as default };
 
-prisma.query, prisma.mutation, prisma.subscription, prisma.exists
+// prisma.exists.Comment({
+//   id: "abvasd",
+// }).then((exists) => {
+//   console.log(exists);
+// })
 
- const createPostForUser = async (authorId, data) => {
-   const userExists = await prisma.exists.User({ id: authorId });
+// prisma.query, prisma.mutation, prisma.subscription, prisma.exists
 
-   if (!userExists) {
-     throw new Error('User not found');
-   }
-  const post = await prisma.mutation.createPost({
-    data: {
-      ...data,
-      author: {
-        connect: {
-          id: authorId,
-        }
-      }
-    },
-  }, `{ author { id name email posts { id title published } } }`);
+//  const createPostForUser = async (authorId, data) => {
+//    const userExists = await prisma.exists.User({ id: authorId });
 
-  return post.author;
- }
+//    if (!userExists) {
+//      throw new Error('User not found');
+//    }
+//   const post = await prisma.mutation.createPost({
+//     data: {
+//       ...data,
+//       author: {
+//         connect: {
+//           id: authorId,
+//         }
+//       }
+//     },
+//   }, `{ author { id name email posts { id title published } } }`);
 
- createPostForUser("ck80khe7z00rt0991jen7jmgb", {
-   title: "Great books to read",
-   body: "The War of ARt",
-   published: true,
- }).then(user => {
-   console.log(JSON.stringify(user, undefined, 2))
- }).catch(err => {
-  console.log(err);
- })
+//   return post.author;
+//  }
 
- const updatePostForUser = async (postId, data) => {
-   const postExists = prisma.exists.Post({
-     id: postId,
-   });
+//  createPostForUser("ck80khe7z00rt0991jen7jmgb", {
+//    title: "Great books to read",
+//    body: "The War of ARt",
+//    published: true,
+//  }).then(user => {
+//    console.log(JSON.stringify(user, undefined, 2))
+//  }).catch(err => {
+//   console.log(err);
+//  })
 
-   if (!postExists) {
-     throw new Error('This post was not found...');
-   }
+//  const updatePostForUser = async (postId, data) => {
+//    const postExists = prisma.exists.Post({
+//      id: postId,
+//    });
 
-   const post = await prisma.mutation.updatePost({
-    where: {
-      id: postId
-    },
-      data,
-    }, `{ author { id name email posts { id title published } } }`);
+//    if (!postExists) {
+//      throw new Error('This post was not found...');
+//    }
 
-   return post.author;
- }
+//    const post = await prisma.mutation.updatePost({
+//     where: {
+//       id: postId
+//     },
+//       data,
+//     }, `{ author { id name email posts { id title published } } }`);
 
- updatePostForUser("ck823ryk501s309913zd7e1yq", {
-   title: "Shitty books to read",
-   body: "poopp and read type of books",
-   published: false,
- }).then(data => {
-   console.log(JSON.stringify(data, undefined, 2));
- }).catch(err => console.log(err))
+//    return post.author;
+//  }
+
+//  updatePostForUser("ck823ryk501s309913zd7e1yq", {
+//    title: "Shitty books to read",
+//    body: "poopp and read type of books",
+//    published: false,
+//  }).then(data => {
+//    console.log(JSON.stringify(data, undefined, 2));
+//  }).catch(err => console.log(err))
 
 // prisma.mutation.createPost({
 //   data: {
